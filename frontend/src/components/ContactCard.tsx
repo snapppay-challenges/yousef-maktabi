@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Building, Mail, Phone } from "lucide-react";
+import { Building, Mail, MapPin, Phone } from "lucide-react";
 import { AVATAR_PLACEHOLDER } from "src/constants";
 import { Contact } from "src/types/contact";
 
@@ -30,7 +30,10 @@ const ContactCard = ({ contact }: Props) => {
               {contact.company}
             </span>
           </div>
-          <p className="text-sm text-gray-500">{contact.address}</p>
+          <p className="text-sm text-gray-500 flex items-center gap-x-1">
+            <MapPin size={12} />
+            {contact.address || "—"}
+          </p>
           <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
             <span className="text-xs text-gray-500 flex items-center">
               <Phone size={12} className="mr-1 text-gray-400" />

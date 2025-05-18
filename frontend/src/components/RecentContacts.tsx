@@ -1,5 +1,6 @@
 import { Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AVATAR_PLACEHOLDER } from "src/constants";
 import { Contact } from "src/types/contact";
 
 interface Props {
@@ -25,7 +26,7 @@ const RecentContacts = ({ contacts }: Props) => {
             >
               <div className="flex items-center">
                 <img
-                  src={contact.avatar}
+                  src={contact.avatar || AVATAR_PLACEHOLDER}
                   alt={`${contact.first_name}-${contact.last_name}`}
                   className="w-8 h-8 rounded-full object-cover"
                 />

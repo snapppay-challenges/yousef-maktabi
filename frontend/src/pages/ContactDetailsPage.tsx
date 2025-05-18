@@ -1,10 +1,19 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Building, ChevronLeft, Mail, MapPin, Phone } from "lucide-react";
+import {
+  Building,
+  Calendar,
+  ChevronLeft,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 import { useRecentContacts } from "src/hooks/useRecentContacts";
 import useContactQuery from "src/hooks/useContactQuery";
 import DetailsInfoItem from "src/components/DetailsInfoItem";
 import ContactDetailsLoading from "src/components/ContactDetailsLoading";
+import { formatDate } from "src/utils";
+import { AVATAR_PLACEHOLDER } from "src/constants";
 
 const ContactDetailsPage = () => {
   const { id } = useParams();
@@ -12,6 +21,8 @@ const ContactDetailsPage = () => {
   const { addRecentContact } = useRecentContacts();
 
   const { data: contact, isLoading, isError } = useContactQuery(Number(id));
+
+  const validAvatarUrl = contact?.avatar ?? AVATAR_PLACEHOLDER;
 
   const backToContacts = () => {
     navigate(-1);
@@ -73,7 +84,7 @@ const ContactDetailsPage = () => {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
           <div className="relative">
             <img
-              src={contact.avatar}
+              src={validAvatarUrl}
               alt={`${contact.first_name}'s avatar`}
               className="w-32 h-32 rounded-full object-cover border-4 border-white shadow max-w-32 max-h-32"
             />
@@ -90,7 +101,7 @@ const ContactDetailsPage = () => {
                   href={`tel:${contact.phone}`}
                   className="text-blue-600 hover:underline"
                 >
-                  {contact.phone}
+                  {contact.phone || "—"}
                 </a>
               </DetailsInfoItem>
 
@@ -99,16 +110,20 @@ const ContactDetailsPage = () => {
                   href={`mailto:${contact.email}`}
                   className="text-blue-600 hover:underline"
                 >
-                  {contact.email}
+                  {contact.email || "—"}
                 </a>
               </DetailsInfoItem>
 
               <DetailsInfoItem icon={<Building size={18} />} label="Company">
-                {contact.company}
+                {contact.company || "—"}
               </DetailsInfoItem>
 
               <DetailsInfoItem icon={<MapPin size={18} />} label="Address">
-                {contact.address}
+                {contact.address || "—"}
+              </DetailsInfoItem>
+
+              <DetailsInfoItem icon={<Calendar size={18} />} label="Created At">
+                {formatDate(contact.createdAt, "YYYY MMMM DD")}
               </DetailsInfoItem>
             </div>
 
