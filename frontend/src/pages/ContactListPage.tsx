@@ -8,15 +8,21 @@ import ContactListLoading from "../components/ContactListLoading";
 import ContactCard from "../components/ContactCard";
 import { useContactsQuery } from "../hooks/useContactsQuery";
 import EmptyState from "../components/EmptyState";
+import { useSearchParams } from "react-router-dom";
 
 const ContactListPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const { recentContacts } = useRecentContacts();
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
-  }, []);
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearchQuery(query);
+      setSearchParams(query ? { q: query } : {});
+    },
+    [setSearchParams]
+  );
 
   const {
     data,
@@ -85,14 +91,16 @@ const ContactListPage = () => {
         </h1>
       </div>
 
-      <SearchBar onSearch={handleSearch} className="mb-6" />
+      <SearchBar
+        onSearch={handleSearch}
+        initialValue={searchQuery}
+        className="mb-6"
+      />
 
       {!searchQuery && <RecentContacts contacts={recentContacts} />}
 
       {isLoading ? (
-        <div className="flex-grow overflow-auto">
-          {<ContactListLoading itemCount={8} />}
-        </div>
+        <div className="flex-grow overflow-auto">{<ContactListLoading />}</div>
       ) : contacts.length === 0 ? (
         <EmptyState
           message={

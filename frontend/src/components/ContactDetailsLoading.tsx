@@ -1,5 +1,3 @@
-import React from "react";
-
 const ContactDetailsSkeleton = () => {
   return (
     <div className="bg-white rounded-lg shadow p-6 animate-pulse">

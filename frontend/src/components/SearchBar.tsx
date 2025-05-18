@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { Search, X } from "lucide-react";
 
@@ -6,14 +6,16 @@ interface Props {
   onSearch: (query: string) => void;
   placeholder?: string;
   className?: string;
+  initialValue?: string;
 }
 
 const SearchBar = ({
   onSearch,
   placeholder = "Search contacts..",
   className = "",
+  initialValue = "",
 }: Props) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialValue);
   const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
