@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecentContacts } from "../hooks/useRecentContacts";
-import useContactQuery from "../hooks/useContactQuery";
-import ContactDetailsLoading from "../components/ContactDetailsLoading";
 import { Building, ChevronLeft, Mail, MapPin, Phone } from "lucide-react";
-import DetailsInfoItem from "../components/DetailsInfoItem";
+import { useRecentContacts } from "src/hooks/useRecentContacts";
+import useContactQuery from "src/hooks/useContactQuery";
+import DetailsInfoItem from "src/components/DetailsInfoItem";
+import ContactDetailsLoading from "src/components/ContactDetailsLoading";
 
 const ContactDetailsPage = () => {
   const { id } = useParams();

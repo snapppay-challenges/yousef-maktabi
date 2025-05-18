@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDebounce } from "../hooks/useDebounce";
 import { Search, X } from "lucide-react";
+import { useDebounce } from "src/hooks/useDebounce";
 
 interface Props {
   onSearch: (query: string) => void;

@@ -1,4 +1,4 @@
-const ContactDetailsSkeleton = () => {
+const ContactDetailsLoading = () => {
   return (
     <div className="bg-white rounded-lg shadow p-6 animate-pulse">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -34,4 +34,4 @@ const ContactDetailsSkeleton = () => {
   );
 };
 
-export default ContactDetailsSkeleton;
+export default ContactDetailsLoading;

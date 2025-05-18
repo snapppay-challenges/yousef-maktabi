@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getContactListAPI } from "../services/contact";
-import { PaginatedResponse } from "../types";
-import { Contact } from "../types/contact";
+import { getContactListAPI } from "src/services/contact";
+import { PaginatedResponse } from "src/types";
+import { Contact } from "src/types/contact";
 
 const PAGE_LIMIT = 24;
 

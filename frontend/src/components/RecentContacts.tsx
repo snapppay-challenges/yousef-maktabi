@@ -1,6 +1,6 @@
 import { Clock } from "lucide-react";
-import { Contact } from "../types/contact";
 import { Link } from "react-router-dom";
+import { Contact } from "src/types/contact";
 
 interface Props {
   contacts: Contact[];

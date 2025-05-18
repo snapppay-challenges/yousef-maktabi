@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { api } from "./base";
-import { PaginatedResponse } from "../types";
-import { Contact } from "../types/contact";
+import { PaginatedResponse } from "src/types";
+import { Contact } from "src/types/contact";
 
 export const getContactListAPI = (options: AxiosRequestConfig = {}) => {
   return api.get<PaginatedResponse<Contact>>("/passenger", options);

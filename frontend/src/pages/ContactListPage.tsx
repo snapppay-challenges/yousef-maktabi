@@ -1,14 +1,13 @@
-import React, { useCallback, useState, useRef, useEffect } from "react";
-import SearchBar from "../components/SearchBar";
-import { RefreshCw, User } from "lucide-react";
-import { useRecentContacts } from "../hooks/useRecentContacts";
-import RecentContacts from "../components/RecentContacts";
-
-import ContactListLoading from "../components/ContactListLoading";
-import ContactCard from "../components/ContactCard";
-import { useContactsQuery } from "../hooks/useContactsQuery";
-import EmptyState from "../components/EmptyState";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { RefreshCw, User } from "lucide-react";
+import { useRecentContacts } from "src/hooks/useRecentContacts";
+import { useContactsQuery } from "src/hooks/useContactsQuery";
+import SearchBar from "src/components/SearchBar";
+import RecentContacts from "src/components/RecentContacts";
+import ContactListLoading from "src/components/ContactListLoading";
+import EmptyState from "src/components/EmptyState";
+import ContactCard from "src/components/ContactCard";
 
 const ContactListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,7 +39,7 @@ const ContactListPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const first = entries[0];
+        const [first] = entries;
         if (first.isIntersecting && hasNextPage && !isFetchingNextPage) {
           fetchNextPage();
         }

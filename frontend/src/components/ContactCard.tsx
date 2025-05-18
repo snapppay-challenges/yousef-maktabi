@@ -1,19 +1,21 @@
-import React from "react";
-import { Contact } from "../types/contact";
 import { Link } from "react-router-dom";
 import { Building, Mail, Phone } from "lucide-react";
+import { AVATAR_PLACEHOLDER } from "src/constants";
+import { Contact } from "src/types/contact";
 
 interface Props {
   contact: Contact;
 }
 
 const ContactCard = ({ contact }: Props) => {
+  const validAvatarUrl = contact.avatar ?? AVATAR_PLACEHOLDER;
+
   return (
     <Link to={`/contacts/${contact.id}`} className="block w-full mb-3 ">
       <div className="flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all duration-200">
         <div className="relative">
           <img
-            src={contact.avatar}
+            src={validAvatarUrl}
             alt={`${contact.first_name}'s avatar`}
             className="w-12 h-12 rounded-full object-cover"
           />
