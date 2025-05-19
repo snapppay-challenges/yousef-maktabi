@@ -6,14 +6,13 @@ import { Contact } from "src/types/contact";
 const PAGE_LIMIT = 24;
 
 const generateFilterParams = (searchQuery: string) => {
-  let filter: Record<string, any> | null = null;
+  if (!searchQuery.trim()) return null;
 
-  if (searchQuery.trim()) {
-    if (/^\d+$/.test(searchQuery)) {
-      filter = { phone: { contains: searchQuery } };
-    } else {
-      filter = { first_name: { contains: searchQuery } };
-    }
+  let filter: Record<string, any>;
+  if (/^\d+$/.test(searchQuery)) {
+    filter = { phone: { contains: searchQuery } };
+  } else {
+    filter = { first_name: { contains: searchQuery } };
   }
 
   return filter;

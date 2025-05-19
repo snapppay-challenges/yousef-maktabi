@@ -13,7 +13,7 @@ import useContactQuery from "src/hooks/useContactQuery";
 import DetailsInfoItem from "src/components/DetailsInfoItem";
 import ContactDetailsLoading from "src/components/ContactDetailsLoading";
 import { formatDate } from "src/utils";
-import { AVATAR_PLACEHOLDER } from "src/constants";
+import BaseAvatar from "src/components/BaseAvatar";
 
 const ContactDetailsPage = () => {
   const { id } = useParams();
@@ -21,8 +21,6 @@ const ContactDetailsPage = () => {
   const { addRecentContact } = useRecentContacts();
 
   const { data: contact, isLoading, isError } = useContactQuery(Number(id));
-
-  const validAvatarUrl = contact?.avatar ?? AVATAR_PLACEHOLDER;
 
   const backToContacts = () => {
     navigate(-1);
@@ -35,60 +33,31 @@ const ContactDetailsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contact]);
 
-  if (isLoading) {
-    return (
-      <div className="max-w-3xl mx-auto p-4 sm:p-6 h-screen flex flex-col">
-        <button
-          onClick={backToContacts}
-          className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-6"
-        >
-          <ChevronLeft size={20} className="mr-1" />
-          Back to contacts
-        </button>
-        <ContactDetailsLoading />;
-      </div>
-    );
-  }
+  const renderContent = () => {
+    if (isLoading) {
+      return <ContactDetailsLoading />;
+    }
 
-  if (isError || !contact) {
-    return (
-      <div className="max-w-3xl mx-auto p-4 sm:p-6 h-screen flex flex-col">
-        <button
-          onClick={backToContacts}
-          className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-6"
-        >
-          <ChevronLeft size={20} className="mr-1" />
-          <span>Back to contacts</span>
-        </button>
+    if (isError || !contact) {
+      return (
         <div className="bg-red-50 text-red-600 p-6 rounded-lg text-center">
           <p className="text-xl mb-4">Contact not found</p>
           <p>
             The contact you're looking for doesn't exist or has been removed.
           </p>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  return (
-    <div className="max-w-3xl mx-auto p-4 sm:p-6 pb-16 h-screen overflow-auto">
-      <button
-        onClick={backToContacts}
-        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-6"
-      >
-        <ChevronLeft size={20} className="mr-1" />
-        <span>Back to contacts</span>
-      </button>
-
+    return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          <div className="relative">
-            <img
-              src={validAvatarUrl}
-              alt={`${contact.first_name}'s avatar`}
-              className="w-32 h-32 rounded-full object-cover border-4 border-white shadow max-w-32 max-h-32"
-            />
-          </div>
+          <BaseAvatar
+            src={contact.avatar}
+            alt={`${contact.first_name}'s avatar`}
+            size={32}
+            className="border-4 border-white shadow"
+          />
 
           <div className="flex-grow text-center md:text-left">
             <h1 className="text-2xl font-bold text-gray-900 mb-6">
@@ -138,6 +107,19 @@ const ContactDetailsPage = () => {
           </div>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto p-4 sm:p-6 pb-16 h-screen overflow-auto">
+      <button
+        onClick={backToContacts}
+        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-6"
+      >
+        <ChevronLeft size={20} className="mr-1" />
+        <span>Back to contacts</span>
+      </button>
+      {renderContent()}
     </div>
   );
 };

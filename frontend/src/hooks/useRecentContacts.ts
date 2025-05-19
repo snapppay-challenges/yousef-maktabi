@@ -5,7 +5,7 @@ const STORAGE_KEY = "recent-viewed-contacts";
 const MAX_RECENT_CONTACTS = 4;
 
 export const useRecentContacts = () => {
-  const [recentContacts, setRecentContacts] = useState<any[]>([]);
+  const [recentContacts, setRecentContacts] = useState<Contact[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);

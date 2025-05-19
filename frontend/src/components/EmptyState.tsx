@@ -1,9 +1,9 @@
-import React from "react";
+import { ReactNode } from "react";
 import { UserSearch } from "lucide-react";
 
 interface Props {
   message?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 }
 
 const EmptyState = ({

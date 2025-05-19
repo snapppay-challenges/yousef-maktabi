@@ -1,24 +1,28 @@
 import { useCallback, useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { RefreshCw, User } from "lucide-react";
 import { useRecentContacts } from "src/hooks/useRecentContacts";
 import { useContactsQuery } from "src/hooks/useContactsQuery";
 import SearchBar from "src/components/SearchBar";
-import RecentContacts from "src/components/RecentContacts";
+import RecentContactList from "src/components/RecentContactList";
 import ContactListLoading from "src/components/ContactListLoading";
 import EmptyState from "src/components/EmptyState";
 import ContactCard from "src/components/ContactCard";
+import ErrorState from "src/components/ErrorState";
+import ContactListHeader from "src/components/ContactListHeader";
+import { SEARCH_URL_QUERY } from "src/constants";
 
 const ContactListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get(SEARCH_URL_QUERY) || ""
+  );
   const { recentContacts } = useRecentContacts();
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = useCallback(
     (query: string) => {
       setSearchQuery(query);
-      setSearchParams(query ? { q: query } : {});
+      setSearchParams(query ? { [SEARCH_URL_QUERY]: query } : {});
     },
     [setSearchParams]
   );
@@ -37,58 +41,26 @@ const ContactListPage = () => {
   const contactCount = data?.pages[0].meta.total;
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [first] = entries;
-        if (first.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const currentRef = loadMoreRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
+    if (!hasNextPage || isFetchingNextPage) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        fetchNextPage();
       }
-    };
+    });
+
+    const node = loadMoreRef.current;
+    if (node) observer.observe(node);
+
+    return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isError) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full p-4">
-        <p className="text-red-500 mb-4">Error loading contacts.</p>
-        <button
-          onClick={() => refetch()}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center"
-        >
-          <RefreshCw size={16} className="mr-2" />
-          Try Again
-        </button>
-      </div>
-    );
+    return <ErrorState refetch={refetch} />;
   }
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 h-screen flex flex-col">
-      <div className="flex items-center mb-6">
-        <div className="flex items center text-blue-600 mr-3">
-          <User size={24} />
-        </div>
-        <h1 className="text-2xl font-semibold text-gray-800">
-          Contacts
-          {data && (
-            <span className="ml-2 text-sm text-gray-500 self-end mb-1">
-              ({contactCount})
-            </span>
-          )}
-        </h1>
-      </div>
+      <ContactListHeader contactCount={contactCount || 0} />
 
       <SearchBar
         onSearch={handleSearch}
@@ -96,7 +68,7 @@ const ContactListPage = () => {
         className="mb-6"
       />
 
-      {!searchQuery && <RecentContacts contacts={recentContacts} />}
+      {!searchQuery && <RecentContactList contacts={recentContacts} />}
 
       {isLoading ? (
         <div className="flex-grow overflow-auto">{<ContactListLoading />}</div>
