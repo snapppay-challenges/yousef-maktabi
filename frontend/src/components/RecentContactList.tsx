@@ -1,5 +1,5 @@
 import { Clock } from "lucide-react";
-import { Contact } from "src/types/contact";
+import { Contact } from "src/types";
 import RecentContactListItem from "./RecentContactListItem";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getContactByIdAPI } from "src/services/contact";
+import { getContactByIdAPI } from "src/services";
 
 const useContactQuery = (id: number) => {
   const query = useQuery({

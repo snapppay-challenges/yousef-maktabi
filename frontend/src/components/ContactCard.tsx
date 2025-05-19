@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Building, Mail, MapPin, Phone } from "lucide-react";
-import { Contact } from "src/types/contact";
+import { Contact } from "src/types";
 import BaseAvatar from "./BaseAvatar";
 
 interface Props {

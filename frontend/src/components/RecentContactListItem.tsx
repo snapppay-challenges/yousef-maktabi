@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Contact } from "src/types/contact";
+import { Contact } from "src/types";
 import BaseAvatar from "./BaseAvatar";
 
 interface Props {

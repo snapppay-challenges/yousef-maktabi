@@ -1,3 +1,5 @@
+export * from "./contact";
+
 export type PaginatedResponse<T> = {
   meta: {
     skipped: number;

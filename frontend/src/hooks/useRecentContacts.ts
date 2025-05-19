@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Contact } from "src/types/contact";
+import { Contact } from "src/types";
 
 const STORAGE_KEY = "recent-viewed-contacts";
 const MAX_RECENT_CONTACTS = 4;
