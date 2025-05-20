@@ -17,7 +17,7 @@ const RecentContacts = ({ contacts }: Props) => {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {contacts.map((contact) => {
-          return <RecentContactListItem contact={contact} />;
+          return <RecentContactListItem contact={contact} key={contact.id} />;
         })}
       </div>
     </div>
