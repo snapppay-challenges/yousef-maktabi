@@ -30,6 +30,7 @@ This is a contact management application which I developed as part of my technic
 - 🧮 Add Virtual Scrolling for improved performance with large datasets.
 - 🧭 Introduce a Back to Top button after scrolling.
 - 🧪 Add Tests to ensure component reliability and prevent regressions.
+- 🔍 Improve Search Functionality to support case-insensitive name matching.
 
 ---
 
