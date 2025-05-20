@@ -1,20 +1,22 @@
-import React from "react";
+import { ReactNode } from "react";
 
 interface Props {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
 const DetailsInfoItem = ({ icon, label, children, className = "" }: Props) => {
   return (
-    <div className={`${className}`}>
-      <div className="text-sm font-medium text-gray-500 mb-1 flex items-center">
+    <div
+      className={`flex items-center md:items-start justify-between md:flex-col ${className}`}
+    >
+      <div className="text-sm text-gray-500 mb-1 flex items-center">
         <span className="mr-2 text-gray-400">{icon}</span>
         {label}
       </div>
-      <div className="text-gray-800">{children}</div>
+      <div className="text-gray-800 font-medium text-left">{children}</div>
     </div>
   );
 };

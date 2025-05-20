@@ -12,7 +12,7 @@ const RecentContactListItem = ({ contact }: Props) => {
     <Link
       key={contact.id}
       to={`/contacts/${contact.id}`}
-      className="group bg-white rounded-lg p-3 border border-gray-100 hover:border-blue-100 hover:shadow-sm transition-all"
+      className="bg-white rounded-lg p-3 border border-gray-100 hover:border-blue-100 hover:shadow-sm transition-all"
     >
       <div className="flex items-center">
         <BaseAvatar
