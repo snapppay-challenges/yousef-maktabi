@@ -53,7 +53,7 @@ npm start
 
 Make sure your backend server is running before starting the frontend. By default, the backend runs at http://localhost:1337
 
-### 2. Start the Frontend App
+### 3. Start the Frontend App
 
 ```bash
 cd ../frontend
