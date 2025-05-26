@@ -114,5 +114,5 @@ The application should now be running at http://localhost:3000
 - UI is good and pretty.
 
 ### Conclusion
-I think he has a good understanding of the basics of React and TypeScript. expect of some error handling issues and last name search, other functionalities are fairly good implemented. In my idea he could pass this step as a good mid-level candidate.
+I think he has a good understanding of the basics of React and TypeScript. expect of some error handling issues and last name search, other functionalities are fairly good implemented. In my idea he could pass this step as a mid-level candidate.
 
