@@ -8,6 +8,7 @@ interface Props {
 }
 
 const RecentContactListItem = ({ contact }: Props) => {
+  // NOTE-Sobhan: He could destructure the contact like: const { id, first_name, phone, last_name, avatar } = contact;
   return (
     <Link
       key={contact.id}

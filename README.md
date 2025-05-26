@@ -68,35 +68,51 @@ The application should now be running at http://localhost:3000
 
 -   [ ] Check first interviewer's comments
 -   [ ] Main functionalities: These items SHOULD work correctly
-    -   [ ] List view
-        -   [ ] Show list of contacts properly with image, name, and tel and be clickable
-        -   [ ] Handle server errors
-    -   [ ] Pagination
-        -   [ ] Infinite scroll/page number button
-        -   [ ] Handle loading and end of the list
+    -   [x] List view
+        -   [x] Show list of contacts properly with image, name, and tel and be clickable
+        -   [x] Handle server errors - NOTE-Sobhan: except of the blocking point.
+    -   [x] Pagination
+        -   [x] Infinite scroll/page number button
+        -   [x] Handle loading and end of the list
     -   [ ] Detail view
-        -   [ ] Handle routing properly
-        -   [ ] Handle server errors
-        -   [ ] Handle routing error on manually changing the detail id
+        -   [x] Handle routing properly
+        -   [] Handle server errors
+        -   [x] Handle routing error on manually changing the detail id
     -   [ ] Search
-        -   [ ] Using Debounce
+        -   [x] Using Debounce
         -   [ ] Handle multiple requests
-        -   [ ] Search by first name, last name, and telephone
-    -   [ ] Most visited contacts
-        -   [ ] Handle incorrect items in the list (e.g., when you manually change the detail page address)
+        -   [x] Search by first name, last name, and telephone - NOTE-Sobhan: Last name is not implemented.
+    -   [x] Most visited contacts
+        -   [x] Handle incorrect items in the list (e.g., when you manually change the detail page address)
 -   [ ] Clean code:
-    -   [ ] Well-structured project
-    -   [ ] Separate concerns
-    -   [ ] Component-thinking
-    -   [ ] Simple to understand and less complexity
-    -   [ ] No over-engineering
+    -   [x] Well-structured project
+    -   [x] Separate concerns
+    -   [x] Component-thinking
+    -   [x] Simple to understand and less complexity
+    -   [x] No over-engineering
     -   [ ] Avoid bad-practice patterns (e.g., multi re-rendering components, useEffect chaining)
     -   [ ] No acute performance issues
-    -   [ ] Using pure CSS in a good way / Using CSS frameworks like Tailwind without extra complexity
+    -   [x] Using pure CSS in a good way / Using CSS frameworks like Tailwind without extra complexity
 -   [ ] Plus points and nice to have: DON’T judge just based on lack of these items; they should be better compared to other competitors:
-    -   [ ] Creativity or eye-catching design
-    -   [ ] Using absolute path
+    -   [x] Creativity or eye-catching design
+    -   [x] Using absolute path
     -   [ ] Using ESLint
-    -   [ ] Using TypeScript in a best practice way (otherwise is a negative point)
+    -   [x] Using TypeScript in a best practice way (otherwise is a negative point)
     -   [ ] Using (unit/e2e) Test in an applicable way not just writing some samples
     -   [ ] Set up the project from scratch using Webpack, etc (without over-engineering).
+
+
+## Sobhan
+
+- When we block the main URL, it will retry and at last it goes to the whole page error and we lose all recently visited contacts.
+- When we search, the result of the search will be shown in the list, and the recently visited contacts will not be shown until we remove the query.
+- We don't have not-found page for invalid URLs.
+- When we got some pages and the next page's request has error, it goes to the whole page error and we lose all recently visited contacts.
+- Didn't separate 400 error UI with 500 or server errors in contact detail page.
+- Usage of TS and Tailwind is good.
+- The code is well-structured and solid.
+- UI is good and pretty.
+
+### Conclusion
+I think he has a good understanding of the basics of React and TypeScript. expect of some error handling issues and last name search, other functionalities are fairly good implemented. In my idea he could pass this step as a good mid-level candidate.
+
