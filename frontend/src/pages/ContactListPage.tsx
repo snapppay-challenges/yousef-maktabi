@@ -12,93 +12,100 @@ import ContactListHeader from "src/components/ContactListHeader";
 import { SEARCH_URL_QUERY } from "src/constants";
 
 const ContactListPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get(SEARCH_URL_QUERY) || ""
-  );
-  const { recentContacts } = useRecentContacts();
-  const loadMoreRef = useRef<HTMLDivElement>(null);
+	const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSearch = useCallback(
-    (query: string) => {
-      setSearchQuery(query);
-      setSearchParams(query ? { [SEARCH_URL_QUERY]: query } : {});
-    },
-    [setSearchParams]
-  );
+	/** Note (Mohammadreza): There is no need to define a separate searchQuery state. 
+   * You can directly derive searchQuery from searchParams as follows:
+  const searchQuery = searchParams.get(SEARCH_URL_QUERY) || ""; */
 
-  const {
-    data,
-    isLoading,
-    isError,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-    refetch,
-  } = useContactsQuery(searchQuery);
+	const [searchQuery, setSearchQuery] = useState(
+		searchParams.get(SEARCH_URL_QUERY) || "",
+	);
+	const { recentContacts } = useRecentContacts();
+	const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const contacts = data?.pages.flatMap((page) => page.items) || [];
-  const contactCount = data?.pages[0].meta.total;
+	const handleSearch = useCallback(
+		(query: string) => {
+			setSearchQuery(query);
+			setSearchParams(query ? { [SEARCH_URL_QUERY]: query } : {});
+		},
+		[setSearchParams],
+	);
 
-  useEffect(() => {
-    if (!hasNextPage || isFetchingNextPage) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        fetchNextPage();
-      }
-    });
+	const {
+		data,
+		isLoading,
+		isError,
+		hasNextPage,
+		isFetchingNextPage,
+		fetchNextPage,
+		refetch,
+	} = useContactsQuery(searchQuery);
 
-    const node = loadMoreRef.current;
-    if (node) observer.observe(node);
+	const contacts = data?.pages.flatMap((page) => page.items) || [];
+	const contactCount = data?.pages[0].meta.total;
 
-    return () => observer.disconnect();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+	useEffect(() => {
+		if (!hasNextPage || isFetchingNextPage) return;
+		const observer = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				fetchNextPage();
+			}
+		});
 
-  if (isError) {
-    return <ErrorState refetch={refetch} />;
-  }
+		const node = loadMoreRef.current;
+		if (node) observer.observe(node);
 
-  return (
-    <div className="max-w-3xl mx-auto px-4 py-6 h-screen flex flex-col">
-      <ContactListHeader contactCount={contactCount || 0} />
+		return () => observer.disconnect();
+	}, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-      <SearchBar
-        onSearch={handleSearch}
-        initialValue={searchQuery}
-        className="mb-6"
-      />
+	if (isError) {
+		return <ErrorState refetch={refetch} />;
+	}
 
-      {!searchQuery && <RecentContactList contacts={recentContacts} />}
+	return (
+		<div className='max-w-3xl mx-auto px-4 py-6 h-screen flex flex-col'>
+			<ContactListHeader contactCount={contactCount || 0} />
 
-      {isLoading ? (
-        <div className="flex-grow overflow-auto">{<ContactListLoading />}</div>
-      ) : contacts.length === 0 ? (
-        <EmptyState
-          message={
-            searchQuery
-              ? `No contacts found for "${searchQuery}"`
-              : "No contacts found"
-          }
-        />
-      ) : (
-        <div className="flex-grow overflow-auto">
-          {contacts.map((contact) => (
-            <ContactCard key={contact.id} contact={contact} />
-          ))}
+			<SearchBar
+				onSearch={handleSearch}
+				initialValue={searchQuery}
+				className='mb-6'
+			/>
 
-          {hasNextPage && (
-            <div ref={loadMoreRef} className="py-4 text-center">
-              {isFetchingNextPage && (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
+			{!searchQuery && <RecentContactList contacts={recentContacts} />}
+			{/** Note (Mohammadreza): The nested ternary expressions can be refactored into clearer conditional rendering statements for improved readability and maintainability.*/}
+			{isLoading ? (
+				<div className='flex-grow overflow-auto'>
+					{<ContactListLoading />}
+				</div>
+			) : contacts.length === 0 ? (
+				<EmptyState
+					message={
+						searchQuery
+							? `No contacts found for "${searchQuery}"`
+							: "No contacts found"
+					}
+				/>
+			) : (
+				<div className='flex-grow overflow-auto'>
+					{contacts.map((contact) => (
+						<ContactCard key={contact.id} contact={contact} />
+					))}
+
+					{hasNextPage && (
+						<div ref={loadMoreRef} className='py-4 text-center'>
+							{isFetchingNextPage && (
+								<div className='flex items-center justify-center'>
+									<div className='animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500'></div>
+								</div>
+							)}
+						</div>
+					)}
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default ContactListPage;
