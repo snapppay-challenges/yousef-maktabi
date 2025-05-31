@@ -122,4 +122,3 @@ If we want to evaluate this for a Senior position, there are several aspects and
 -   Lack of list virtualization for performance optimization.
 -   No use of an AbortController to handle request cancellation.
     I have added some improvement notes, which could serve as discussion points or challenges in a future interview.
-
